@@ -1,0 +1,14 @@
+# Raw exports before sanitising (tenant IDs, emails)
+*.raw.json
+exports-raw/
+
+# Secrets and local settings
+.env
+*.pfx
+*.key
+secrets/
+
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
