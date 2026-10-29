@@ -25,9 +25,28 @@ Every policy below excludes the group **CA-Exclude-BreakGlass**, so the emergenc
 | alice | Standard user | Pilot user |
 | bob | Standard user | Pilot user |
 | helpdesk-test | Admin (via PIM, eligible only) | Tests admin policies and PIM activation |
-| breakglass01, breakglass02 | Cloud-only Global Administrators | Emergency access, excluded from all CA policies |
+| breakglass01, breakglass02 | Cloud-only Global Administrators (active permanent, not PIM eligible) | Emergency access, excluded from all CA policies that block or restrict sign-in |
 | CA-Exclude-BreakGlass | Security group | Holds both break-glass accounts |
 | CA-Pilot-Users | Security group | alice and bob, first rollout target |
+
+## Break-glass account design
+
+Based on Microsoft's guidance, "Manage emergency access accounts in Microsoft Entra ID".
+
+| Decision | Choice | Reason |
+|---|---|---|
+| Number | Two accounts | Redundancy: if one fails, the other still works |
+| Account type | Cloud-only, on the `onmicrosoft.com` domain | No dependency on on-premises AD, federation or a custom domain that could fail |
+| Role | Global Administrator, **active permanent** | An eligible (PIM) assignment needs activation, which could fail during an outage |
+| Sign-in method | Phishing-resistant MFA: a passkey (FIDO2) | Satisfies Microsoft's mandatory MFA for admin portals, so the accounts still work even though they are excluded from Conditional Access |
+| Different method from daily admins | Yes | An outage affecting the admins' usual method (e.g. Microsoft Authenticator) does not also lock out the emergency accounts |
+| Not tied to a person | Yes | No personal phone, personal MFA registration or employee device |
+| Conditional Access | Excluded through the group CA-Exclude-BreakGlass | One group to manage, instead of editing every policy |
+| Monitoring | Alert on **any** sign-in (critical severity) via Log Analytics | Any use is either a drill or an emergency, and both must be reviewed |
+| Testing | Sign in every 90 days, and after staff or licence changes | Proves the accounts still work against current policies |
+| Credential storage | Passkeys and passwords stored offline, in separate secure places | No single point of loss |
+
+**Lab limitation:** in a real company the FIDO2 keys are hardware keys kept in separate safes. In this lab, [record what was used, e.g. one hardware security key, or a passkey, and why]. This is noted as a deviation from production practice.
 
 ## Policies
 
