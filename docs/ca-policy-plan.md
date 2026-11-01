@@ -24,7 +24,7 @@ Every policy below excludes the group **CA-Exclude-BreakGlass**, so the emergenc
 |---|---|---|
 | alice | Standard user | Pilot user |
 | bob | Standard user | Pilot user |
-| helpdesk-test | Admin (via PIM, eligible only) | Tests admin policies and PIM activation |
+| helpdesk | Admin (via PIM, eligible only) | Tests admin policies and PIM activation |
 | breakglass01, breakglass02 | Cloud-only Global Administrators (active permanent, not PIM eligible) | Emergency access, excluded from all CA policies that block or restrict sign-in |
 | CA-Exclude-BreakGlass | Security group | Holds both break-glass accounts |
 | CA-Pilot-Users | Security group | alice and bob, first rollout target |
@@ -69,7 +69,7 @@ Report-only results appear on the **Report-only** tab of each sign-in log entry.
 | T1 | alice | Browser sign-in to office.com from Ireland | CA01: User action required. CA04: Not applied. | | |
 | T2 | bob | Browser sign-in, MFA completed | CA01: Success | | |
 | T3 | alice | What If: client app "Exchange ActiveSync" | CA02: applies, Block | | Real legacy sign-ins are hard to create because Microsoft has already switched off basic authentication for most Exchange Online protocols, so use What If. |
-| T4 | helpdesk-test | Sign-in after activating an admin role in PIM | CA03: User action required or Success | | |
+| T4 | helpdesk | Sign-in after activating an admin role in PIM | CA03: User action required or Success | | |
 | T5 | alice | What If: location outside Ireland/UK (e.g. United States) | CA04: applies, Block | | |
 | T6 | breakglass01 | Browser sign-in | No CA policy applies | | Proves the exclusion works |
 | T7 | alice | Sign-in from a compliant Intune device (after Project 5) | CA05: Success | | |
