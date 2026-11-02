@@ -1,7 +1,7 @@
 # Conditional Access policy plan
 
 BrightKaka Tech: Zero Trust identity lab
-Status: **Draft (pre-trial)**. Results are filled in during trial week 1.
+Status: **CA01 to CA04 in Report-only since 2026-11-01 (UTC).** CA05 follows after the Intune project.
 
 ## How to read this plan
 
@@ -46,7 +46,7 @@ Based on Microsoft's guidance, "Manage emergency access accounts in Microsoft En
 | Testing | Sign in every 90 days, and after staff or licence changes | Proves the accounts still work against current policies |
 | Credential storage | Passkeys and passwords stored offline, in separate secure places | No single point of loss |
 
-**Lab limitation:** in a real company the FIDO2 keys are hardware keys kept in separate safes. In this lab, [record what was used, e.g. one hardware security key, or a passkey, and why]. This is noted as a deviation from production practice.
+**Lab limitation:** in a real company the FIDO2 keys are hardware keys kept in separate safes. In this lab, each break-glass account uses a device-bound passkey in Microsoft Authenticator, both on the same phone, because no hardware keys were available. This is a deviation from production practice: losing that one phone would lose both emergency methods.
 
 ## Policies
 
@@ -78,11 +78,27 @@ Report-only results appear on the **Report-only** tab of each sign-in log entry.
 
 | ID | Report-only from | Pilot (CA-Pilot-Users) from | Everyone from | Issues found |
 |---|---|---|---|---|
-| CA01 | | | | |
-| CA02 | | | | |
-| CA03 | | | | |
-| CA04 | | | | |
+| CA01 | 2026-11-01 (UTC) | | | |
+| CA02 | 2026-11-01 (UTC) | | | |
+| CA03 | 2026-11-01 (UTC) | | | |
+| CA04 | 2026-11-01 (UTC) | | | |
 | CA05 | | | | |
+
+## What If results
+
+What If simulates a sign-in and shows which policies would apply. Tested with: Office 365 Exchange Online, Windows, Browser, IP 40.77.182.32 (a Microsoft address in the United States), country United States.
+
+| User | Policies that would apply | Policies that would not apply | Result |
+|---|---|---|---|
+| Alice Murphy | CA01 (require MFA), CA04 (block) | CA02 (client app is a modern browser), CA03 (no admin role) | As designed. When several policies apply, all their controls are required and Block always wins, so this sign-in would be blocked. |
+| Emergency Access 01 | None | All four, reason "Users and groups" (excluded) | As designed. The break-glass account is unaffected even from a blocked country. Users are evaluated first, so the exclusion alone protects it. |
+
+## Findings during the build
+
+- **Report-only policies can run alongside Security Defaults.** The portal only requires Security Defaults to be disabled before a policy is switched **On**. Security Defaults therefore kept protecting the tenant during the report-only phase, with no unprotected gap.
+- **The portal offered to exclude the signed-in admin from each policy** to prevent lockout. This was declined: lockout protection comes from the dedicated, monitored break-glass accounts, and the daily admin account must stay covered by every policy.
+- **Passkeys are enabled for all users by default** in new tenants (passkey profiles). No separate passkey policy was needed for the break-glass accounts.
+- **Passkey sign-in depends on the browser.** On the Windows 10 host, Firefox only offered a USB security key, while Edge allowed signing in with the phone passkey. In production, hardware FIDO2 keys are recommended for break-glass accounts because they work in any browser.
 
 ## Lockout recovery plan
 
