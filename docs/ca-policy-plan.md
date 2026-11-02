@@ -66,8 +66,8 @@ Report-only results appear on the **Report-only** tab of each sign-in log entry.
 
 | Test | Who | How | Expected report-only result | Actual result | Notes |
 |---|---|---|---|---|---|
-| T1 | alice | Browser sign-in to office.com from Ireland | CA01: User action required. CA04: Not applied. | | |
-| T2 | bob | Browser sign-in, MFA completed | CA01: Success | | |
+| T1 | alice | Browser sign-in to office.com from Ireland | CA01: User action required. CA04: Not applied. | CA01: Success. CA02, CA03, CA04: Not applied. | Passed. CA01 showed Success rather than User action required because Alice had just registered and completed MFA in the same session, so her token already carried the MFA claim. CA04 did not apply because the sign-in came from Ireland. |
+| T2 | bob | Browser sign-in, MFA completed | CA01: Success | CA01: Success on the completed sign-in. On an earlier attempt without MFA, CA01 showed User action required. CA02, CA03, CA04: Not applied. | Passed. The two entries together show both outcomes of CA01: a sign-in without MFA would be challenged, and a sign-in with MFA is allowed. |
 | T3 | alice | What If: client app "Exchange ActiveSync" | CA02: applies, Block | | Real legacy sign-ins are hard to create because Microsoft has already switched off basic authentication for most Exchange Online protocols, so use What If. |
 | T4 | helpdesk | Sign-in after activating an admin role in PIM | CA03: User action required or Success | | |
 | T5 | alice | What If: location outside Ireland/UK (e.g. United States) | CA04: applies, Block | | |
@@ -99,6 +99,24 @@ What If simulates a sign-in and shows which policies would apply. Tested with: O
 - **The portal offered to exclude the signed-in admin from each policy** to prevent lockout. This was declined: lockout protection comes from the dedicated, monitored break-glass accounts, and the daily admin account must stay covered by every policy.
 - **Passkeys are enabled for all users by default** in new tenants (passkey profiles). No separate passkey policy was needed for the break-glass accounts.
 - **Passkey sign-in depends on the browser.** On the Windows 10 host, Firefox only offered a USB security key, while Edge allowed signing in with the phone passkey. In production, hardware FIDO2 keys are recommended for break-glass accounts because they work in any browser.
+
+## A new user's first sign-in, read from the logs
+
+Each test user's first sign-in produced a chain of sign-in log entries. Each code explains one step:
+
+| Error code | Status | Meaning | Seen for |
+|---|---|---|---|
+| 50055 | Interrupted | The temporary password had expired, so a new one had to be set | Alice, Bob |
+| 50133 | Failure | The session was no longer valid because the password had just been changed | Bob |
+| 50126 | Failure | Wrong username or password | Bob |
+| 50072 | Interrupted | An MFA method had to be registered | Alice |
+| 530035 | Failure | An attempt was blocked by Security Defaults | Alice, Bob |
+| 50140 | Interrupted | The "Stay signed in?" prompt | Alice |
+| 0 | Success | Signed in | Alice, Bob |
+
+**Investigating 530035.** The code appeared for both users at the same stage of their first sign-in, and the next attempt succeeded both times. The sign-in log's failure reason was only: "Access has been blocked by security defaults." The additional details said: "If this is unexpected, see security defaults that applied to this request in the Azure Portal." The Security Defaults page is a single on/off switch with no per-rule detail. Microsoft's description of AADSTS530035 gives two causes: the request used legacy authentication, or Security Defaults judged it unsafe. Both sign-ins were from a modern browser to OfficeHome, so legacy authentication is ruled out, which leaves the "deemed unsafe" check on a brand new account. Security Defaults does not say which rule fired and offers no settings to adjust or exclude it. That lack of visibility and control is one of the reasons organisations replace Security Defaults with Conditional Access, where every decision is listed per policy on the sign-in entry.
+
+**The "Conditional Access" column in the sign-in log only reflects policies that are On.** While policies are in Report-only, that column shows "Not Applied" for everyone, and the real evaluation is on the **Report-only** tab of each entry.
 
 ## Lockout recovery plan
 
