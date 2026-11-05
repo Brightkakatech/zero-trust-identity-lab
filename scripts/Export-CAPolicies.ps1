@@ -74,7 +74,7 @@ function Resolve-ObjectName {
     $result
 }
 
-function Clear-ODataMetadata {
+function Clear-ODataProperty {
     # Graph adds properties such as "authenticationStrength@odata.context",
     # which contain the policy's own ID. Remove them at every level.
     param([object] $InputObject)
@@ -86,7 +86,7 @@ function Clear-ODataMetadata {
             $InputObject.PSObject.Properties.Remove($property.Name)
         }
         else {
-            foreach ($child in @($property.Value)) { Clear-ODataMetadata -InputObject $child }
+            foreach ($child in @($property.Value)) { Clear-ODataProperty -InputObject $child }
         }
     }
 }
@@ -138,7 +138,7 @@ foreach ($policy in $policies) {
     $policy.PSObject.Properties.Remove('createdDateTime')
     $policy.PSObject.Properties.Remove('modifiedDateTime')
     $policy.PSObject.Properties.Remove('deletedDateTime')
-    Clear-ODataMetadata -InputObject $policy
+    Clear-ODataProperty -InputObject $policy
 
     $policyId = if ($policy.displayName -match '^(CA\d{2})\b') { $Matches[1] } else { ($policy.displayName -replace '[^A-Za-z0-9]+', '-').Trim('-') }
     $file = Join-Path $OutputPath "$policyId.json"
