@@ -1,0 +1,22 @@
+[95mPester v5.9.1[0m
+[95m
+[95mStarting discovery in 1 files.[0m
+[95mDiscovery found 12 tests in 219ms.[0m
+[95mRunning tests.[0m
+[95m
+[95mRunning tests from 'C:\Users\OK\Projects\zero-trust-identity-lab\tests\SyntheticUsers.Tests.ps1'[0m
+[92mDescribing Synthetic user data[0m
+[32m  [+] contains 150 users[0m[90m 135ms (92ms|43ms)[0m
+[32m  [+] has a unique sign-in alias for every user[0m[90m 24ms (23ms|1ms)[0m
+[32m  [+] has a unique employee ID for every user[0m[90m 15ms (13ms|1ms)[0m
+[32m  [+] labels every user as synthetic with an SYN employee ID[0m[90m 15ms (13ms|1ms)[0m
+[32m  [+] uses only lowercase letters, digits and dots in aliases[0m[90m 15ms (14ms|1ms)[0m
+[32m  [+] uses only the approved departments[0m[90m 16ms (15ms|1ms)[0m
+[32m  [+] uses only Ireland or the UK as usage location[0m[90m 17ms (16ms|2ms)[0m
+[32m  [+] gives London staff a GB usage location and everyone else IE[0m[90m 38ms (37ms|1ms)[0m
+[32m  [+] puts every user in exactly one valid rollout ring[0m[90m 18ms (17ms|2ms)[0m
+[32m  [+] puts all of IT, and only IT, in Ring0[0m[90m 19ms (17ms|2ms)[0m
+[32m  [+] keeps the pilot ring small: between 5 and 15 percent of staff[0m[90m 33ms (32ms|1ms)[0m
+[32m  [+] includes at least one pilot user from every department outside IT[0m[90m 21ms (19ms|2ms)[0m
+[97mTests completed in 1.2s[0m
+[32mTests Passed: 12, [0m[90mFailed: 0, [0m[90mSkipped: 0, [0m[90mInconclusive: 0, [0m[37m[0m[90mNotRun: 0[0m

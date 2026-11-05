@@ -61,12 +61,23 @@ _Added at the end._
 
 ```
 README.md
+data/
+  synthetic-users.csv    150 fictional staff, departments and rollout rings
 docs/
   ca-policy-plan.md      policy design, test cases, rollout record
+  pim-setup.md           just in time admin access with PIM
+  synthetic-users.md     the synthetic workforce: design, safety, results
+  demos/                 short recordings of key moments
+  evidence/              test and script output
   diagrams/              architecture diagram
   screenshots/           evidence for each stage
 policies/                exported Conditional Access policy JSON (sanitised)
-scripts/                 PowerShell used in the project
+scripts/
+  New-SyntheticUserData.ps1   builds the CSV (fixed seed, reproducible)
+  New-LabUsers.ps1            creates the users through Microsoft Graph
+  Remove-LabUsers.ps1         deletes only users carrying all synthetic labels
+tests/
+  SyntheticUsers.Tests.ps1    Pester checks on the data before it reaches the tenant
 ```
 
 ## Author

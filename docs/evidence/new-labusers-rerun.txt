@@ -1,0 +1,2 @@
+Read 150 users from C:\Users\OK\Projects\zero-trust-identity-lab\scripts\..\data\synthetic-users.csv
+Done. Created: 0. Skipped (already existed): 150. Failed: 0.
