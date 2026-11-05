@@ -1,0 +1,7 @@
+
+Group            DisplayName  Department
+-----            -----------  ----------
+DYN-Dept-Finance Alice Murphy Finance
+DYN-Dept-IT      HelpDesk     IT
+DYN-Dept-Sales   Bob Kelly    Sales
+

@@ -63,10 +63,12 @@ _Added at the end._
 README.md
 data/
   synthetic-users.csv    150 fictional staff, departments and rollout rings
+  dynamic-groups.json    department and ring group rules (configuration as code)
 docs/
   ca-policy-plan.md      policy design, test cases, rollout record
   pim-setup.md           just in time admin access with PIM
   synthetic-users.md     the synthetic workforce: design, safety, results
+  dynamic-groups.md      dynamic department and rollout ring groups
   demos/                 short recordings of key moments
   evidence/              test and script output
   diagrams/              architecture diagram
@@ -76,8 +78,10 @@ scripts/
   New-SyntheticUserData.ps1   builds the CSV (fixed seed, reproducible)
   New-LabUsers.ps1            creates the users through Microsoft Graph
   Remove-LabUsers.ps1         deletes only users carrying all synthetic labels
+  New-LabDynamicGroups.ps1    creates the dynamic groups from the JSON
 tests/
   SyntheticUsers.Tests.ps1    Pester checks on the data before it reaches the tenant
+  DynamicGroups.Tests.ps1     runs every group rule against the data before it is created
 ```
 
 ## Author

@@ -1,0 +1,15 @@
+
+Group               Members Processing
+-----               ------- ----------
+DYN-Dept-Executive        4 On
+DYN-Dept-Finance         21 On
+DYN-Dept-HR              12 On
+DYN-Dept-IT              13 On
+DYN-Dept-Legal            6 On
+DYN-Dept-Marketing       18 On
+DYN-Dept-Operations      40 On
+DYN-Dept-Sales           39 On
+DYN-Ring0-IT             12 On
+DYN-Ring1-Pilot          18 On
+DYN-Ring2-Broad         120 On
+

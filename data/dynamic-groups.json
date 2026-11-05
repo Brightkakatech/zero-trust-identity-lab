@@ -1,0 +1,15 @@
+{
+  "groups": [
+    { "displayName": "DYN-Dept-IT",         "description": "Dynamic: all staff in the IT department",         "membershipRule": "(user.department -eq \"IT\")" },
+    { "displayName": "DYN-Dept-Finance",    "description": "Dynamic: all staff in the Finance department",    "membershipRule": "(user.department -eq \"Finance\")" },
+    { "displayName": "DYN-Dept-HR",         "description": "Dynamic: all staff in the HR department",         "membershipRule": "(user.department -eq \"HR\")" },
+    { "displayName": "DYN-Dept-Sales",      "description": "Dynamic: all staff in the Sales department",      "membershipRule": "(user.department -eq \"Sales\")" },
+    { "displayName": "DYN-Dept-Marketing",  "description": "Dynamic: all staff in the Marketing department",  "membershipRule": "(user.department -eq \"Marketing\")" },
+    { "displayName": "DYN-Dept-Operations", "description": "Dynamic: all staff in the Operations department", "membershipRule": "(user.department -eq \"Operations\")" },
+    { "displayName": "DYN-Dept-Legal",      "description": "Dynamic: all staff in the Legal department",      "membershipRule": "(user.department -eq \"Legal\")" },
+    { "displayName": "DYN-Dept-Executive",  "description": "Dynamic: all staff in the Executive department",  "membershipRule": "(user.department -eq \"Executive\")" },
+    { "displayName": "DYN-Ring0-IT",        "description": "Dynamic: rollout ring 0, gets every change first", "membershipRule": "(user.extensionAttribute1 -eq \"Ring0\")" },
+    { "displayName": "DYN-Ring1-Pilot",     "description": "Dynamic: rollout ring 1, pilot users from every department", "membershipRule": "(user.extensionAttribute1 -eq \"Ring1\")" },
+    { "displayName": "DYN-Ring2-Broad",     "description": "Dynamic: rollout ring 2, everyone else", "membershipRule": "(user.extensionAttribute1 -eq \"Ring2\")" }
+  ]
+}
