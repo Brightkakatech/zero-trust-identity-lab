@@ -1,0 +1,89 @@
+[95mPester v5.9.1[0m
+[95m
+[95mStarting discovery in 3 files.[0m
+[95mDiscovery found 65 tests in 530ms.[0m
+[95mRunning tests.[0m
+[95m
+[95mRunning tests from 'C:\Users\OK\Projects\zero-trust-identity-lab\tests\ConditionalAccess.Tests.ps1'[0m
+[92mDescribing Policy export[0m
+[32m  [+] contains at least one exported policy[0m[90m 121ms (79ms|42ms)[0m
+[0m
+[92mDescribing Policy CA01[0m
+[32m  [+] is named CAnn followed by a description[0m[90m 26ms (22ms|4ms)[0m
+[32m  [+] matches its file name[0m[90m 14ms (11ms|3ms)[0m
+[32m  [+] excludes the break-glass group[0m[90m 13ms (11ms|2ms)[0m
+[32m  [+] does not include the break-glass group[0m[90m 11ms (9ms|2ms)[0m
+[32m  [+] is report-only or on, never left switched off[0m[90m 10ms (9ms|1ms)[0m
+[93m  [!] is only switched on after an approved report-only period is skipped, because the policy is in report-only mode[0m[90m 44ms (40ms|4ms)[0m
+[32m  [+] contains no tenant object IDs outside the application list[0m[90m 26ms (24ms|2ms)[0m
+[32m  [+] contains no Graph metadata[0m[90m 9ms (8ms|1ms)[0m
+[32m  [+] has no unresolved names[0m[90m 10ms (8ms|2ms)[0m
+[32m  [+] has a grant control[0m[90m 18ms (17ms|1ms)[0m
+[93m  [!] does not block all users from all locations is skipped, because not a location based block[0m[90m 12ms (10ms|2ms)[0m
+[0m
+[92mDescribing Policy CA02[0m
+[32m  [+] is named CAnn followed by a description[0m[90m 9ms (3ms|6ms)[0m
+[32m  [+] matches its file name[0m[90m 5ms (3ms|2ms)[0m
+[32m  [+] excludes the break-glass group[0m[90m 5ms (2ms|3ms)[0m
+[32m  [+] does not include the break-glass group[0m[90m 6ms (4ms|3ms)[0m
+[32m  [+] is report-only or on, never left switched off[0m[90m 7ms (5ms|2ms)[0m
+[93m  [!] is only switched on after an approved report-only period is skipped, because the policy is in report-only mode[0m[90m 6ms (3ms|2ms)[0m
+[32m  [+] contains no tenant object IDs outside the application list[0m[90m 7ms (6ms|2ms)[0m
+[32m  [+] contains no Graph metadata[0m[90m 9ms (6ms|3ms)[0m
+[32m  [+] has no unresolved names[0m[90m 6ms (4ms|2ms)[0m
+[32m  [+] has a grant control[0m[90m 7ms (4ms|3ms)[0m
+[93m  [!] does not block all users from all locations is skipped, because not a location based block[0m[90m 6ms (4ms|2ms)[0m
+[0m
+[92mDescribing Policy CA03[0m
+[32m  [+] is named CAnn followed by a description[0m[90m 9ms (4ms|5ms)[0m
+[32m  [+] matches its file name[0m[90m 4ms (2ms|2ms)[0m
+[32m  [+] excludes the break-glass group[0m[90m 7ms (4ms|3ms)[0m
+[32m  [+] does not include the break-glass group[0m[90m 8ms (4ms|4ms)[0m
+[32m  [+] is report-only or on, never left switched off[0m[90m 6ms (4ms|3ms)[0m
+[93m  [!] is only switched on after an approved report-only period is skipped, because the policy is in report-only mode[0m[90m 7ms (5ms|2ms)[0m
+[32m  [+] contains no tenant object IDs outside the application list[0m[90m 13ms (11ms|2ms)[0m
+[32m  [+] contains no Graph metadata[0m[90m 34ms (31ms|3ms)[0m
+[32m  [+] has no unresolved names[0m[90m 13ms (8ms|5ms)[0m
+[32m  [+] has a grant control[0m[90m 10ms (7ms|3ms)[0m
+[93m  [!] does not block all users from all locations is skipped, because not a location based block[0m[90m 11ms (7ms|4ms)[0m
+[0m
+[92mDescribing Policy CA04[0m
+[32m  [+] is named CAnn followed by a description[0m[90m 14ms (6ms|8ms)[0m
+[32m  [+] matches its file name[0m[90m 10ms (6ms|4ms)[0m
+[32m  [+] excludes the break-glass group[0m[90m 16ms (4ms|12ms)[0m
+[32m  [+] does not include the break-glass group[0m[90m 7ms (4ms|3ms)[0m
+[32m  [+] is report-only or on, never left switched off[0m[90m 6ms (4ms|2ms)[0m
+[93m  [!] is only switched on after an approved report-only period is skipped, because the policy is in report-only mode[0m[90m 9ms (6ms|3ms)[0m
+[32m  [+] contains no tenant object IDs outside the application list[0m[90m 11ms (9ms|2ms)[0m
+[32m  [+] contains no Graph metadata[0m[90m 10ms (7ms|4ms)[0m
+[32m  [+] has no unresolved names[0m[90m 10ms (7ms|4ms)[0m
+[32m  [+] has a grant control[0m[90m 6ms (4ms|2ms)[0m
+[32m  [+] does not block all users from all locations[0m[90m 11ms (9ms|2ms)[0m
+[95m
+[95mRunning tests from 'C:\Users\OK\Projects\zero-trust-identity-lab\tests\DynamicGroups.Tests.ps1'[0m
+[92mDescribing Dynamic group definitions[0m
+[32m  [+] defines at least one group[0m[90m 9ms (5ms|5ms)[0m
+[32m  [+] uses unique group names[0m[90m 13ms (12ms|1ms)[0m
+[32m  [+] follows the naming rule DYN-Dept-Name or DYN-RingN-Name[0m[90m 13ms (11ms|1ms)[0m
+[32m  [+] gives every group a description that starts with "Dynamic:"[0m[90m 11ms (9ms|2ms)[0m
+[32m  [+] uses only the supported rule format[0m[90m 128ms (127ms|2ms)[0m
+[32m  [+] matches at least one synthetic user with every rule (no empty groups)[0m[90m 73ms (71ms|1ms)[0m
+[32m  [+] has a department group for every department in the data[0m[90m 17ms (16ms|1ms)[0m
+[32m  [+] puts every synthetic user in exactly one ring group[0m[90m 510ms (509ms|1ms)[0m
+[95m
+[95mRunning tests from 'C:\Users\OK\Projects\zero-trust-identity-lab\tests\SyntheticUsers.Tests.ps1'[0m
+[92mDescribing Synthetic user data[0m
+[32m  [+] contains 150 users[0m[90m 8ms (4ms|3ms)[0m
+[32m  [+] has a unique sign-in alias for every user[0m[90m 9ms (8ms|1ms)[0m
+[32m  [+] has a unique employee ID for every user[0m[90m 17ms (16ms|1ms)[0m
+[32m  [+] labels every user as synthetic with an SYN employee ID[0m[90m 12ms (11ms|1ms)[0m
+[32m  [+] uses only lowercase letters, digits and dots in aliases[0m[90m 16ms (14ms|1ms)[0m
+[32m  [+] uses only the approved departments[0m[90m 11ms (10ms|1ms)[0m
+[32m  [+] uses only Ireland or the UK as usage location[0m[90m 12ms (11ms|1ms)[0m
+[32m  [+] gives London staff a GB usage location and everyone else IE[0m[90m 14ms (14ms|1ms)[0m
+[32m  [+] puts every user in exactly one valid rollout ring[0m[90m 14ms (13ms|1ms)[0m
+[32m  [+] puts all of IT, and only IT, in Ring0[0m[90m 12ms (11ms|1ms)[0m
+[32m  [+] keeps the pilot ring small: between 5 and 15 percent of staff[0m[90m 24ms (23ms|1ms)[0m
+[32m  [+] includes at least one pilot user from every department outside IT[0m[90m 16ms (15ms|1ms)[0m
+[97mTests completed in 3.83s[0m
+[32mTests Passed: 58, [0m[90mFailed: 0, [0m[93mSkipped: 7, [0m[90mInconclusive: 0, [0m[37m[0m[90mNotRun: 0[0m
