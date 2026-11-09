@@ -75,5 +75,5 @@ Before the assignment, HelpDesk had **no directory roles**.
 
 ## Still to do
 
-- Access review on the Project-Team group
+- ~~Access review on the Project-Team group~~ Done, see [access-review.md](access-review.md)
 - Alert on PIM activations of high privilege roles

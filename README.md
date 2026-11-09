@@ -69,6 +69,7 @@ data/
 docs/
   ca-policy-plan.md      policy design, test cases, rollout record
   pim-setup.md           just in time admin access with PIM
+  access-review.md       quarterly access review: decisions, stalled auto-apply, manual enforcement
   synthetic-users.md     the synthetic workforce: design, safety, results
   dynamic-groups.md      dynamic department and rollout ring groups
   policies-as-code.md    policy export, CI guardrails and the pull request proof
