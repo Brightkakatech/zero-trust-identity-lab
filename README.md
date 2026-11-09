@@ -2,6 +2,8 @@
 
 > **Status: in progress.** This README is filled in as the project is built.
 
+![Tests](https://github.com/Brightkakatech/zero-trust-identity-lab/actions/workflows/test.yml/badge.svg)
+
 ## Summary
 
 BrightKaka Tech is a fictional company used for my labs. This project secures sign-ins to its Microsoft 365 tenant using Zero Trust principles: verify every sign-in, give admins power only when they need it, and regularly check who still needs access.
@@ -69,19 +71,26 @@ docs/
   pim-setup.md           just in time admin access with PIM
   synthetic-users.md     the synthetic workforce: design, safety, results
   dynamic-groups.md      dynamic department and rollout ring groups
+  policies-as-code.md    policy export, CI guardrails and the pull request proof
   demos/                 short recordings of key moments
   evidence/              test and script output
   diagrams/              architecture diagram
   screenshots/           evidence for each stage
-policies/                exported Conditional Access policy JSON (sanitised)
+policies/
+  CA01.json ... CA04.json     exported Conditional Access policies (sanitised)
+  rollout-approvals.json      approvals required before a policy can be switched On
 scripts/
   New-SyntheticUserData.ps1   builds the CSV (fixed seed, reproducible)
   New-LabUsers.ps1            creates the users through Microsoft Graph
   Remove-LabUsers.ps1         deletes only users carrying all synthetic labels
   New-LabDynamicGroups.ps1    creates the dynamic groups from the JSON
+  Export-CAPolicies.ps1       exports the policies as sanitised JSON (read only)
 tests/
   SyntheticUsers.Tests.ps1    Pester checks on the data before it reaches the tenant
   DynamicGroups.Tests.ps1     runs every group rule against the data before it is created
+  ConditionalAccess.Tests.ps1 guardrails every policy must pass (break-glass excluded, approvals)
+.github/workflows/
+  test.yml                    style check and all tests on every push and pull request
 ```
 
 ## Author
