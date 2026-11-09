@@ -1,7 +1,7 @@
 {
   "templateId": null,
   "displayName": "CA03 Require MFA for admins",
-  "state": "enabledForReportingButNotEnforced",
+  "state": "enabled",
   "sessionControls": null,
   "conditions": {
     "userRiskLevels": [],

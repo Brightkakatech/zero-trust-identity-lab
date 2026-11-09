@@ -1,7 +1,7 @@
 {
   "templateId": null,
   "displayName": "CA02 Block legacy authentication",
-  "state": "enabledForReportingButNotEnforced",
+  "state": "enabled",
   "sessionControls": null,
   "conditions": {
     "userRiskLevels": [],

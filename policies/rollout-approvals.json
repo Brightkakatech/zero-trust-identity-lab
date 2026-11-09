@@ -1,4 +1,9 @@
 {
   "minimumReportOnlyDays": 7,
-  "approvals": []
+  "approvals": [
+    { "policy": "CA01", "reportOnlyFrom": "2026-11-01", "approvedOn": "2026-11-09", "approvedBy": "Bright Amalahu", "change": "CHG-001", "scope": "DYN-Ring0-IT, DYN-Ring1-Pilot" },
+    { "policy": "CA02", "reportOnlyFrom": "2026-11-01", "approvedOn": "2026-11-09", "approvedBy": "Bright Amalahu", "change": "CHG-001", "scope": "All users" },
+    { "policy": "CA03", "reportOnlyFrom": "2026-11-01", "approvedOn": "2026-11-09", "approvedBy": "Bright Amalahu", "change": "CHG-001", "scope": "Admin directory roles" },
+    { "policy": "CA04", "reportOnlyFrom": "2026-11-01", "approvedOn": "2026-11-09", "approvedBy": "Bright Amalahu", "change": "CHG-001", "scope": "DYN-Ring0-IT, DYN-Ring1-Pilot" }
+  ]
 }

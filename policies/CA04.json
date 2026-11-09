@@ -1,7 +1,7 @@
 {
   "templateId": null,
   "displayName": "CA04 Block sign-in from outside Ireland and the UK",
-  "state": "enabledForReportingButNotEnforced",
+  "state": "enabled",
   "sessionControls": null,
   "conditions": {
     "userRiskLevels": [],
@@ -25,11 +25,12 @@
       "applicationFilter": null
     },
     "users": {
-      "includeUsers": [
-        "All"
-      ],
+      "includeUsers": [],
       "excludeUsers": [],
-      "includeGroups": [],
+      "includeGroups": [
+        "group:DYN-Ring0-IT",
+        "group:DYN-Ring1-Pilot"
+      ],
       "excludeGroups": [
         "group:CA-Exclude-BreakGlass"
       ],

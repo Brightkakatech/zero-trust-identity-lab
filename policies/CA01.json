@@ -1,7 +1,7 @@
 {
   "templateId": null,
   "displayName": "CA01 Require MFA for all users",
-  "state": "enabledForReportingButNotEnforced",
+  "state": "enabled",
   "sessionControls": null,
   "conditions": {
     "userRiskLevels": [],
@@ -26,11 +26,12 @@
       "applicationFilter": null
     },
     "users": {
-      "includeUsers": [
-        "All"
-      ],
+      "includeUsers": [],
       "excludeUsers": [],
-      "includeGroups": [],
+      "includeGroups": [
+        "group:DYN-Ring0-IT",
+        "group:DYN-Ring1-Pilot"
+      ],
       "excludeGroups": [
         "group:CA-Exclude-BreakGlass"
       ],

@@ -1,0 +1,3 @@
+DYN-Ring0-IT: 14
+DYN-Ring1-Pilot: 20
+DYN-Ring2-Broad: 120
