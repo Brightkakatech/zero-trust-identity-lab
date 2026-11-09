@@ -1,7 +1,7 @@
 # Conditional Access policy plan
 
 BrightKaka Tech: Zero Trust identity lab
-Status: **CA01 to CA04 in Report-only since 2026-11-01 (UTC).** CA05 follows after the Intune project.
+Status: **CA01 to CA04 On since 2026-11-09 (UTC)** under [CHG-001](changes/CHG-001-enforce-conditional-access-ring0-ring1.md): CA01 and CA04 for Ring 0 and Ring 1, CA02 for all users, CA03 for admin roles. Report-only from 2026-11-01. CA05 follows after the Intune project.
 
 ## How to read this plan
 
@@ -70,7 +70,7 @@ Report-only results appear on the **Report-only** tab of each sign-in log entry.
 | T2 | bob | Browser sign-in, MFA completed | CA01: Success | CA01: Success on the completed sign-in. On an earlier attempt without MFA, CA01 showed User action required. CA02, CA03, CA04: Not applied. | Passed. The two entries together show both outcomes of CA01: a sign-in without MFA would be challenged, and a sign-in with MFA is allowed. |
 | T3 | alice | What If: client app "Exchange ActiveSync" | CA02: applies, Block | | Real legacy sign-ins are hard to create because Microsoft has already switched off basic authentication for most Exchange Online protocols, so use What If. |
 | T4 | helpdesk | Sign-in after activating an admin role in PIM | CA03: User action required or Success | Before activation (00:36 UTC): CA03 Not applied. At activation (00:49 UTC): CA01 and CA03 Success. CA02, CA04: Not applied. | Passed. Same user, 13 minutes apart: with no role, the admin policy did not apply; once User Administrator was active, it did. PIM refreshed the session itself at activation, so no sign out was needed. See [pim-setup.md](pim-setup.md). |
-| T5 | alice | What If: location outside Ireland/UK (e.g. United States) | CA04: applies, Block | | |
+| T5 | alice | What If: location outside Ireland/UK (e.g. United States). Repeated after enforcement as a real sign-in through a US VPN | CA04: applies, Block | What If: CA04 applies. Real sign-in on 2026-11-09: blocked, error 53003, CA04 Failure | Passed. See [Recording 4](demos/04-ca04-vpn-blocked.gif) |
 | T6 | breakglass01 | Browser sign-in | No CA policy applies | | Proves the exclusion works |
 | T7 | alice | Sign-in from a compliant Intune device (after Project 5) | CA05: Success | | |
 
@@ -78,10 +78,10 @@ Report-only results appear on the **Report-only** tab of each sign-in log entry.
 
 | ID | Report-only from | Pilot (CA-Pilot-Users) from | Everyone from | Issues found |
 |---|---|---|---|---|
-| CA01 | 2026-11-01 (UTC) | | | |
-| CA02 | 2026-11-01 (UTC) | | | |
-| CA03 | 2026-11-01 (UTC) | | | |
-| CA04 | 2026-11-01 (UTC) | | | |
+| CA01 | 2026-11-01 (UTC) | 2026-11-09 (Ring 0 and Ring 1, CHG-001) | | None |
+| CA02 | 2026-11-01 (UTC) | 2026-11-09 (all users from the start, CHG-001) | | None |
+| CA03 | 2026-11-01 (UTC) | 2026-11-09 (admin roles, CHG-001) | | None |
+| CA04 | 2026-11-01 (UTC) | 2026-11-09 (Ring 0 and Ring 1, CHG-001) | | None |
 | CA05 | | | | |
 
 ## What If results
