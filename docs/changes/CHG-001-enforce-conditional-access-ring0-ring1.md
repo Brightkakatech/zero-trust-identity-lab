@@ -60,7 +60,7 @@ Carried out on 2026-11-09 after all four policies were switched On.
 | Alice (Ring 1) signs in from Ireland | MFA prompt, then access | **Passed.** "Approve sign in request" with number matching, then Microsoft 365 home | [Recording 3](../demos/03-ca01-mfa-prompt.gif) |
 | Alice signs in through a VPN in the United States | Blocked by CA04 | **Passed.** "You cannot access this right now", error 53003. Sign-in log: CA04 Failure (block), CA01 Failure, CA02 and CA03 Not applied | [Recording 4](../demos/04-ca04-vpn-blocked.gif) |
 | CI guardrails after the change | All pass, approvals checked | **Passed.** 62 passed, 0 failed, 3 skipped. The approval test ran for all four policies instead of being skipped | [pester-after-enforcement.txt](../evidence/pester-after-enforcement.txt) |
-| breakglass01 signs in | No policy applies | Pending, covered by the break-glass monitoring work | |
+| breakglass01 signs in | No policy applies | **Passed** on 2026-11-11: Conditional Access notApplied, critical alert fired | [breakglass-monitoring.md](../breakglass-monitoring.md) |
 
 **Why CA01 also shows Failure on the blocked sign-in:** Alice was never prompted for MFA. When any policy blocks, Entra ID stops evaluating and does not ask for MFA, because the result cannot change. CA01's requirement was therefore never met. This is "block always wins", first seen in the What If test, now confirmed on a real sign-in.
 

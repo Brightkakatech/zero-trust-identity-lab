@@ -71,7 +71,7 @@ Report-only results appear on the **Report-only** tab of each sign-in log entry.
 | T3 | alice | What If: client app "Exchange ActiveSync" | CA02: applies, Block | | Real legacy sign-ins are hard to create because Microsoft has already switched off basic authentication for most Exchange Online protocols, so use What If. |
 | T4 | helpdesk | Sign-in after activating an admin role in PIM | CA03: User action required or Success | Before activation (00:36 UTC): CA03 Not applied. At activation (00:49 UTC): CA01 and CA03 Success. CA02, CA04: Not applied. | Passed. Same user, 13 minutes apart: with no role, the admin policy did not apply; once User Administrator was active, it did. PIM refreshed the session itself at activation, so no sign out was needed. See [pim-setup.md](pim-setup.md). |
 | T5 | alice | What If: location outside Ireland/UK (e.g. United States). Repeated after enforcement as a real sign-in through a US VPN | CA04: applies, Block | What If: CA04 applies. Real sign-in on 2026-11-09: blocked, error 53003, CA04 Failure | Passed. See [Recording 4](demos/04-ca04-vpn-blocked.gif) |
-| T6 | breakglass01 | Browser sign-in | No CA policy applies | | Proves the exclusion works |
+| T6 | breakglass01 | Browser sign-in | No CA policy applies | Real sign-in on 2026-11-11 with passkey: success, Conditional Access notApplied. Critical alert email received | Passed. See [breakglass-monitoring.md](breakglass-monitoring.md) |
 | T7 | alice | Sign-in from a compliant Intune device (after Project 5) | CA05: Success | | |
 
 ## Rollout record

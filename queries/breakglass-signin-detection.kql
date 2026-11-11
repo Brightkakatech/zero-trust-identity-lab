@@ -1,0 +1,16 @@
+// Break-glass account sign-in detection
+// Used by the Azure Monitor log alert "Break-glass account sign-in" (Sev0, every 5 minutes, threshold > 0).
+// Covers interactive AND non-interactive sign-ins: a stolen token only shows up as non-interactive.
+let BreakGlass = dynamic(["breakglass01@brightkakalab.onmicrosoft.com", "breakglass02@brightkakalab.onmicrosoft.com"]);
+let Interactive = SigninLogs
+    | where UserPrincipalName in~ (BreakGlass)
+    | extend OS = tostring(DeviceDetail.operatingSystem), SignInType = "Interactive";
+let NonInteractive = AADNonInteractiveUserSignInLogs
+    | where UserPrincipalName in~ (BreakGlass)
+    | extend OS = tostring(parse_json(DeviceDetail).operatingSystem), SignInType = "Non-interactive"
+    // Known benign: Authenticator on the custodian's iPhone refreshing the passkey session.
+    // Lab trade-off, documented in docs/breakglass-monitoring.md. Production fix: hardware FIDO2 keys.
+    | where not(AppDisplayName == "Microsoft Authentication Broker" and OS startswith "Ios");
+union Interactive, NonInteractive
+| project TimeGenerated, SignInType, UserPrincipalName, AppDisplayName, OS, Location, IPAddress, ResultType, ConditionalAccessStatus
+| order by TimeGenerated desc

@@ -73,10 +73,14 @@ docs/
   synthetic-users.md     the synthetic workforce: design, safety, results
   dynamic-groups.md      dynamic department and rollout ring groups
   policies-as-code.md    policy export, CI guardrails and the pull request proof
+  breakglass-monitoring.md  Log Analytics alert on any break-glass sign-in
+  changes/               change records (CHG-001)
   demos/                 short recordings of key moments
   evidence/              test and script output
   diagrams/              architecture diagram
   screenshots/           evidence for each stage
+queries/
+  breakglass-signin-detection.kql  KQL behind the break-glass alert
 policies/
   CA01.json ... CA04.json     exported Conditional Access policies (sanitised)
   rollout-approvals.json      approvals required before a policy can be switched On
