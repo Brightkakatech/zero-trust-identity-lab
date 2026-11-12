@@ -26,12 +26,11 @@
       "applicationFilter": null
     },
     "users": {
-      "includeUsers": [],
-      "excludeUsers": [],
-      "includeGroups": [
-        "group:DYN-Ring0-IT",
-        "group:DYN-Ring1-Pilot"
+      "includeUsers": [
+        "All"
       ],
+      "excludeUsers": [],
+      "includeGroups": [],
       "excludeGroups": [
         "group:CA-Exclude-BreakGlass"
       ],

@@ -1,7 +1,7 @@
 # Conditional Access policy plan
 
 BrightKaka Tech: Zero Trust identity lab
-Status: **CA01 to CA04 On since 2026-11-09 (UTC)** under [CHG-001](changes/CHG-001-enforce-conditional-access-ring0-ring1.md): CA01 and CA04 for Ring 0 and Ring 1, CA02 for all users, CA03 for admin roles. Report-only from 2026-11-01. CA05 follows after the Intune project.
+Status: **CA01 to CA04 On for all users since 2026-11-12 (UTC).** Report-only from 2026-11-01, Ring 0 and Ring 1 from 2026-11-09 under [CHG-001](changes/CHG-001-enforce-conditional-access-ring0-ring1.md), everyone from 2026-11-12 under [CHG-002](changes/CHG-002-enforce-conditional-access-all-users.md). Break-glass accounts excluded and monitored. CA05 follows after the Intune project.
 
 ## How to read this plan
 
@@ -78,10 +78,10 @@ Report-only results appear on the **Report-only** tab of each sign-in log entry.
 
 | ID | Report-only from | Pilot (CA-Pilot-Users) from | Everyone from | Issues found |
 |---|---|---|---|---|
-| CA01 | 2026-11-01 (UTC) | 2026-11-09 (Ring 0 and Ring 1, CHG-001) | | None |
-| CA02 | 2026-11-01 (UTC) | 2026-11-09 (all users from the start, CHG-001) | | None |
-| CA03 | 2026-11-01 (UTC) | 2026-11-09 (admin roles, CHG-001) | | None |
-| CA04 | 2026-11-01 (UTC) | 2026-11-09 (Ring 0 and Ring 1, CHG-001) | | None |
+| CA01 | 2026-11-01 (UTC) | 2026-11-09 (Ring 0 and Ring 1, CHG-001) | 2026-11-12 (CHG-002) | None |
+| CA02 | 2026-11-01 (UTC) | 2026-11-09 (all users from the start, CHG-001) | 2026-11-09 | None |
+| CA03 | 2026-11-01 (UTC) | 2026-11-09 (admin roles, CHG-001) | 2026-11-09 (admin roles) | None |
+| CA04 | 2026-11-01 (UTC) | 2026-11-09 (Ring 0 and Ring 1, CHG-001) | 2026-11-12 (CHG-002) | None |
 | CA05 | | | | |
 
 ## What If results
