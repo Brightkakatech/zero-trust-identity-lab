@@ -4,6 +4,8 @@
 
 How I moved a Microsoft 365 lab tenant from Security Defaults to enforced Conditional Access, run the way I'd run it at work: tested before enforcing, rolled out in stages, kept as code, and monitored. The first part explains the problem, what I did and what I learned. The second part is a full guide to build it yourself.
 
+**Full write-up on Medium:** [How I rolled out Conditional Access without locking anyone out](https://medium.com/@brightkakatech/how-i-rolled-out-conditional-access-without-locking-anyone-out-report-only-rollout-rings-pim-ci-ac6c854b1fbd)
+
 **Built with:** Microsoft Entra ID (Conditional Access, PIM, Access Reviews, dynamic groups), Microsoft 365, PowerShell 7, Microsoft Graph, Pester, GitHub Actions, Azure Monitor, Log Analytics, KQL.
 
 **Scope:** a lab tenant with trial licences, 4 real test accounts and 150 synthetic staff. I played every role (requester, approver, admin, user), so the process is real but the scale is simulated.
