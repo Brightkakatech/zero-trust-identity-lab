@@ -74,6 +74,24 @@ Report-only results appear on the **Report-only** tab of each sign-in log entry.
 | T6 | breakglass01 | Browser sign-in | No CA policy applies | Real sign-in on 2026-11-11 with passkey: success, Conditional Access notApplied. Critical alert email received | Passed. See [breakglass-monitoring.md](breakglass-monitoring.md) |
 | T7 | alice | Sign-in from a compliant Intune device (after Project 5) | CA05: Success | | |
 
+### Evidence
+
+**T1: Alice, completed sign-in. CA01 would allow it, CA02 to CA04 do not apply**
+
+![T1: Alice, completed sign-in. CA01 would allow it, CA02 to CA04 do not apply](screenshots/04-report-only-alice.png)
+
+**T2: Bob before MFA. CA01 would ask for MFA**
+
+![T2: Bob before MFA. CA01 would ask for MFA](screenshots/04-report-only-bob-mfa-required.png)
+
+**T2: Bob after MFA. CA01 would allow it**
+
+![T2: Bob after MFA. CA01 would allow it](screenshots/04-report-only-bob-success.png)
+
+**T5 after enforcement: Alice from the United States, CA04 Failure (block)**
+
+![T5 after enforcement: Alice from the United States, CA04 Failure (block)](screenshots/04-44-alice-blocked-ca04-log.png)
+
 ## Rollout record
 
 | ID | Report-only from | Pilot (CA-Pilot-Users) from | Everyone from | Issues found |
@@ -92,6 +110,52 @@ What If simulates a sign-in and shows which policies would apply. Tested with: O
 |---|---|---|---|
 | Alice Murphy | CA01 (require MFA), CA04 (block) | CA02 (client app is a modern browser), CA03 (no admin role) | As designed. When several policies apply, all their controls are required and Block always wins, so this sign-in would be blocked. |
 | Emergency Access 01 | None | All four, reason "Users and groups" (excluded) | As designed. The break-glass account is unaffected even from a blocked country. Users are evaluated first, so the exclusion alone protects it. |
+
+## Screenshots: the build
+
+**Starting point: Security Defaults on**
+
+![Starting point: Security Defaults on](screenshots/04-01-security-defaults-on.png)
+
+**The two break-glass accounts, cloud only**
+
+![The two break-glass accounts, cloud only](screenshots/04-02-breakglass-accounts.png)
+
+**CA-Exclude-BreakGlass, the one group every policy excludes**
+
+![CA-Exclude-BreakGlass, the one group every policy excludes](screenshots/04-03-breakglass-exclusion-group.png)
+
+**Passkey (FIDO2) authentication method policy**
+
+![Passkey (FIDO2) authentication method policy](screenshots/04-04-passkey-policy.png)
+
+**Passkey registered for an emergency account**
+
+![Passkey registered for an emergency account](screenshots/04-05-breakglass-passkey-registered.png)
+
+**Test users and licences**
+
+![Test users and licences](screenshots/04-06-test-users.png)
+
+**Named location used by CA04: Ireland and the UK**
+
+![Named location used by CA04: Ireland and the UK](screenshots/04-07-named-location-ie-uk.png)
+
+**The portal offers to exclude the signed-in admin; declined, because lockout protection comes from break-glass**
+
+![The portal offers to exclude the signed-in admin; declined, because lockout protection comes from break-glass](screenshots/04-08-ca01-lockout-warning.png)
+
+**CA01 to CA04 created in report-only mode**
+
+![CA01 to CA04 created in report-only mode](screenshots/04-09-ca-policies-report-only.png)
+
+**What If: Alice from the United States, CA01 and CA04 apply**
+
+![What If: Alice from the United States, CA01 and CA04 apply](screenshots/04-10-whatif-alice-us.png)
+
+**What If: break-glass account, no policy applies**
+
+![What If: break-glass account, no policy applies](screenshots/04-11-whatif-breakglass.png)
 
 ## Findings during the build
 

@@ -27,6 +27,17 @@ Entra ID sign-in logs
 | Alert rule | Table rows, count, **greater than 0**, every **5 minutes**, **Sev0**, auto-resolve **off** | Any match fires; every alert stays open until someone has reviewed it |
 | Action group | ag-bk-lab-security, email to the admin mailbox, subject "CRITICAL: Break-glass account sign-in detected" | In production this would be a shared security mailbox or on-call tool |
 
+## Screenshots
+
+**Log Analytics workspace in North Europe**
+
+![Log Analytics workspace in North Europe](screenshots/04-50-log-analytics-workspace.png)
+
+**Diagnostic setting: sign-in and audit logs to the workspace**
+
+![Diagnostic setting: sign-in and audit logs to the workspace](screenshots/04-51-diagnostic-setting-signins.png)
+
+
 ## The detection query
 
 [queries/breakglass-signin-detection.kql](../queries/breakglass-signin-detection.kql)

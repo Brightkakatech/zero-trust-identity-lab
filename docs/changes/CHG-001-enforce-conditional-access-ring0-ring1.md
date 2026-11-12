@@ -66,6 +66,17 @@ Carried out on 2026-11-09 after all four policies were switched On.
 
 **Outcome: change successful.** No rollback needed.
 
+### Screenshots
+
+**CA01 scoped to Ring 0 and Ring 1**
+
+![CA01 scoped to Ring 0 and Ring 1](../screenshots/04-42-ca01-scope-ring0-ring1.png)
+
+**CA04 scoped to Ring 0 and Ring 1**
+
+![CA04 scoped to Ring 0 and Ring 1](../screenshots/04-43-ca04-scope-ring0-ring1.png)
+
+
 ## Rollback
 
 Set the affected policy back to **Report-only**. If an admin cannot sign in, use breakglass01. If several policies cause problems, set all four to Report-only and turn Security Defaults back on.

@@ -67,6 +67,40 @@ Before the assignment, HelpDesk had **no directory roles**.
 
 ![Role active for one hour](demos/02b-pim-active-role.gif)
 
+## Screenshots
+
+**Entra ID P2 trial: 4 of 25 licences, only where needed**
+
+![Entra ID P2 trial: 4 of 25 licences, only where needed](screenshots/04-20-p2-licences-assigned.png)
+
+**Before: HelpDesk has no directory roles**
+
+![Before: HelpDesk has no directory roles](screenshots/04-21-helpdesk-no-roles-before.png)
+
+**Activation rules: 1 hour, MFA, justification, ticket**
+
+![Activation rules: 1 hour, MFA, justification, ticket](screenshots/04-22-pim-activation-settings.png)
+
+**Assignment rules: no permanent assignments, eligibility expires after 6 months**
+
+![Assignment rules: no permanent assignments, eligibility expires after 6 months](screenshots/04-23-pim-assignment-settings.png)
+
+**HelpDesk made eligible, not active**
+
+![HelpDesk made eligible, not active](screenshots/04-24-pim-helpdesk-eligible.png)
+
+**HelpDesk view: User Administrator under Eligible**
+
+![HelpDesk view: User Administrator under Eligible](screenshots/04-25-pim-my-roles-eligible.png)
+
+**T4 before activation: CA03 Not applied**
+
+![T4 before activation: CA03 Not applied](screenshots/04-26-ca03-before-activation.png)
+
+**T4 at activation: CA03 Success**
+
+![T4 at activation: CA03 Success](screenshots/04-27-ca03-after-activation.png)
+
 ## Findings
 
 - **No second MFA prompt on activation.** HelpDesk had completed MFA when signing in a few minutes earlier, and PIM accepted that existing proof. "Azure MFA" on activation does not guarantee a fresh prompt. To force a fresh, stronger check on every activation, PIM can instead require a **Conditional Access authentication context**, linked to a policy that demands, for example, phishing resistant MFA.

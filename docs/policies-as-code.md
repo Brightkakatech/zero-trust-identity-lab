@@ -66,6 +66,11 @@ The fix passes:
 
 ![CI passes after the exclusion is restored](demos/06b-ci-passes-after-fix.gif)
 
+**The failed check on pull request #1: one test failed on CA01**
+
+![The failed check on pull request #1: one test failed on CA01](screenshots/04-41-ci-pr-failure-summary.png)
+
+
 ## What I learned
 
 - **CI catches what passes locally.** The first pipeline run failed on a PSScriptAnalyzer rule (a function name read as plural) that never ran on my PC. The fix was a rename, and the history shows run 1 red and run 2 green.

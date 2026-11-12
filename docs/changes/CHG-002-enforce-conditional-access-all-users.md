@@ -51,6 +51,13 @@ Carried out on 2026-11-12 (UTC) after the change.
 
 **Outcome: change successful.** No rollback needed. CA01 to CA04 now cover every account in the tenant except the two monitored break-glass accounts.
 
+### Screenshot
+
+**CA01 after the change: all users included, break-glass excluded**
+
+![CA01 after the change: all users included, break-glass excluded](../screenshots/04-45-ca01-scope-all-users.png)
+
+
 ## Rollback
 
 Set CA01 and CA04 Include back to DYN-Ring0-IT and DYN-Ring1-Pilot, or to Report-only.

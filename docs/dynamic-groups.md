@@ -48,6 +48,11 @@ Evidence: [creation run](evidence/new-labdynamicgroups-run.txt), [member counts]
 
 Every difference is explained: the three original test users already had a department, so the department rules included them. That is correct behaviour, and they stay in their department groups. None of them has a ring yet, which is why the ring groups match the CSV exactly. They are placed in rings before enforcement.
 
+**Ring group counts after placing the real test users: 14, 20, 120**
+
+![Ring group counts after placing the real test users: 14, 20, 120](screenshots/04-40-ring-counts.png)
+
+
 ## What I learned
 
 - **Dynamic groups fill in the background, not instantly.** Two minutes after creation, 5 groups were complete and 6 were still empty. All 11 were complete about ten minutes later, with "Dynamic rules processing status: Succeeded". A new dynamic group must never be used in a policy until its member count has been checked.

@@ -69,6 +69,40 @@ Remove-MgGroupMemberDirectoryObjectByRef -GroupId $team.Id -DirectoryObjectId $h
 
 Members after the removal: Alice Murphy, Bob Kelly.
 
+## Screenshots
+
+**Before: three members of Project-Team**
+
+![Before: three members of Project-Team](screenshots/04-30-project-team-before.png)
+
+**Review design: owners review, quarterly, auto-apply, justification required**
+
+![Review design: owners review, quarterly, auto-apply, justification required](screenshots/04-31-access-review-design.png)
+
+**Reviewer view in My Access: Approve recommended for all three**
+
+![Reviewer view in My Access: Approve recommended for all three](screenshots/04-32-access-review-recommendations.png)
+
+**Alice approved with a reason**
+
+![Alice approved with a reason](screenshots/04-33-access-review-alice-approved.png)
+
+**Bob approved with a reason**
+
+![Bob approved with a reason](screenshots/04-34-access-review-bob-approved.png)
+
+**HelpDesk denied: the reviewer overrides the recommendation**
+
+![HelpDesk denied: the reviewer overrides the recommendation](screenshots/04-35-access-review-helpdesk-denied.png)
+
+**Results: 2 approved, 1 denied, reviewed by Admin**
+
+![Results: 2 approved, 1 denied, reviewed by Admin](screenshots/04-36-access-review-results.png)
+
+**Stuck on "Applying" after the review ended**
+
+![Stuck on "Applying" after the review ended](screenshots/04-37-access-review-stuck-applying.png)
+
 ## Findings
 
 - **A recorded decision is not the same as an enforced decision.** The review showed "1 denied", but for six days HelpDesk kept his access, and the portal gave no warning beyond the status "Applying". Without checking the group itself, the review would have been reported as complete while the access it was meant to remove was still in place. This is exactly the kind of gap an auditor looks for.
