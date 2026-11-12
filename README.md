@@ -99,6 +99,7 @@ flowchart LR
 - **The access review said "denied", but the user kept access for six days.** Auto-apply stalled. I only found it by checking the group itself, not the review status. Since then I verify outcomes, not statuses.
 - **The alert fired four times and nobody got an email.** The recipient address had never been verified, and Azure skipped it silently. Detection that nobody hears about isn't monitoring.
 - **My first policy export leaked an ID that my tests didn't check for.** I found it by reading the file, fixed the export and added a test, so it can't happen again.
+- **A red check didn't stop the merge.** CI flagged the bad pull request, but the Merge button stayed clickable. A test nobody is forced to pass is only advice, so `main` now has a ruleset that requires it, with no bypass for admins.
 - **Security Defaults blocked a new user with no explanation** (error 530035). It's the clearest argument for Conditional Access: every decision is visible, per policy, per sign-in.
 - **The emergency accounts kept "signing in" from my phone.** Passkeys in Authenticator keep a session alive. I excluded only that exact pattern and noted the real fix: hardware security keys.
 
@@ -382,7 +383,13 @@ Invoke-Pester -Path .\tests -Output Detailed
 
 ![CI passes after the fix](docs/demos/06b-ci-passes-after-fix.gif)
 
-Close the test pull request without merging. Details: [policies-as-code.md](docs/policies-as-code.md).
+Close the test pull request without merging.
+
+4. Make the check required. On its own, CI only reports: the failing check above still left the Merge button clickable. In **Settings → Rules → Rulesets**, create a branch ruleset on the default branch that requires a pull request and the `test` status check, with an empty bypass list. From then on, nothing reaches `main` without passing the guardrails, including my own changes.
+
+![Branch ruleset on main](docs/screenshots/04-46-branch-ruleset-main.jpg)
+
+Details: [policies-as-code.md](docs/policies-as-code.md).
 
 
 ---
@@ -504,7 +511,6 @@ When the project ends:
 
 - CA05 (require a compliant device) after the Intune endpoint project.
 - Require phishing resistant MFA for admins through an authentication strength.
-- Branch ruleset so the guardrail tests are required before merging.
 - Block device code flow with a Conditional Access policy.
 
 ## Repository layout
