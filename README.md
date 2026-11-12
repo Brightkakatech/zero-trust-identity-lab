@@ -49,28 +49,6 @@ flowchart LR
     CA -- Export-CAPolicies.ps1 --> REPO --> CI
 ```
 
-## See it working
-
-**MFA enforced:** Alice signs in from Ireland and is asked to approve the sign-in.
-
-![Alice is asked for MFA](docs/demos/03-ca01-mfa-prompt.gif)
-
-**Blocked from abroad:** the same user, through a United States VPN, is blocked (error 53003).
-
-![Sign-in from the United States is blocked](docs/demos/04-ca04-vpn-blocked.gif)
-
-**Just in time admin:** HelpDesk has no admin rights until he activates User Administrator for one hour.
-
-![PIM activation](docs/demos/02-pim-activation.gif)
-
-**Guardrail in CI:** a pull request that removes the break-glass exclusion fails the tests.
-
-![CI blocks the change](docs/demos/06a-ci-blocks-breakglass-removal.gif)
-
-**Break-glass alert:** an emergency account signs in, and a critical alert email arrives.
-
-![Break-glass alert email](docs/demos/05b-breakglass-alert-email.gif)
-
 ## Policy design
 
 The full plan, with the reason for each policy and every test case, is in [docs/ca-policy-plan.md](docs/ca-policy-plan.md).
@@ -85,15 +63,105 @@ The full plan, with the reason for each policy and every test case, is in [docs/
 
 Every policy excludes the group CA-Exclude-BreakGlass. Its two members are cloud only Global Administrators with passkeys, monitored by a critical alert.
 
-## How it was built
+## The story, step by step
 
-1. **Lab tenant and safety net.** Microsoft 365 Business Premium trial (set to cancel on expiry), two break-glass accounts with passkeys, test users and a lockout recovery plan.
-2. **Policies in report-only.** CA01 to CA04 created in report-only mode while Security Defaults kept protecting the tenant. Tested with What If and real sign-ins. Error 530035 investigated.
-3. **Privileged access.** Entra ID P2 trial, PIM for User Administrator (1 hour, MFA, justification, ticket), and a quarterly access review.
-4. **Scale.** 150 synthetic staff from a CSV through Microsoft Graph, 11 dynamic groups for departments and rollout rings.
-5. **Policies as code.** Sanitised JSON export, 10 guardrail tests per policy, CI on every push and pull request.
-6. **Staged enforcement.** Impact report, then CHG-001 for Ring 0 and Ring 1, verified with recorded sign-ins, then CHG-002 for everyone.
-7. **Monitoring.** Sign-in logs to Log Analytics, KQL detection, Sev0 alert with email, tested with break-glass drills.
+Each step links to its full write-up, where every screenshot and log is kept.
+
+### 1. Starting point: Security Defaults
+
+The tenant was protected only by Security Defaults: one switch, no detail and no tuning.
+
+![Security Defaults on](docs/screenshots/04-01-security-defaults-on.png)
+
+### 2. Build the escape hatch first
+
+Two cloud only break-glass accounts with passkeys, in one group that every policy excludes. [Design](docs/ca-policy-plan.md#break-glass-account-design)
+
+![Break-glass accounts](docs/screenshots/04-02-breakglass-accounts.png)
+
+![Exclusion group](docs/screenshots/04-03-breakglass-exclusion-group.png)
+
+### 3. Policies in report-only, tested before enforcing
+
+CA01 to CA04 ran in report-only mode for 8 days. What If showed Alice from the United States would be blocked, and the break-glass account untouched. [Plan and test cases](docs/ca-policy-plan.md)
+
+![Policies in report-only](docs/screenshots/04-09-ca-policies-report-only.png)
+
+![What If for Alice from the United States](docs/screenshots/04-10-whatif-alice-us.png)
+
+Real sign-ins confirmed it: Bob's sign-in before MFA would have been challenged.
+
+![Report-only result for Bob](docs/screenshots/04-report-only-bob-mfa-required.png)
+
+### 4. Admin rights only when needed (PIM)
+
+HelpDesk is eligible for User Administrator but does not hold it. Activation needs MFA, a reason and a ticket, and ends after one hour. [PIM write-up](docs/pim-setup.md)
+
+![PIM activation rules](docs/screenshots/04-22-pim-activation-settings.png)
+
+![PIM activation](docs/demos/02-pim-activation.gif)
+
+The admin policy CA03 only applied once the role was active:
+
+![CA03 after activation](docs/screenshots/04-27-ca03-after-activation.png)
+
+### 5. Access review, and checking it actually worked
+
+The system recommended keeping HelpDesk in Project-Team. The reviewer denied it because his task was finished. [Access review write-up](docs/access-review.md)
+
+![HelpDesk denied](docs/screenshots/04-35-access-review-helpdesk-denied.png)
+
+Auto-apply then stalled for six days. Checking the group itself, not the status, found it.
+
+![Stuck on Applying](docs/screenshots/04-37-access-review-stuck-applying.png)
+
+### 6. Scale: 150 staff and rollout rings
+
+150 synthetic users created by script from a CSV, and 11 dynamic groups building departments and rings automatically. [Users](docs/synthetic-users.md), [groups](docs/dynamic-groups.md)
+
+![Ring group counts](docs/screenshots/04-40-ring-counts.png)
+
+### 7. Policies as code, with a guardrail that bites
+
+A pull request that quietly removed the break-glass exclusion failed CI in 40 seconds. The fix passed, and the change never reached main. [Policies as code](docs/policies-as-code.md)
+
+![CI blocks the change](docs/demos/06a-ci-blocks-breakglass-removal.gif)
+
+![CI passes after the fix](docs/demos/06b-ci-passes-after-fix.gif)
+
+### 8. Staged enforcement
+
+An impact report said GO. CHG-001 enforced the policies for Ring 0 and Ring 1 first. [CHG-001](docs/changes/CHG-001-enforce-conditional-access-ring0-ring1.md)
+
+![CA01 scoped to Ring 0 and Ring 1](docs/screenshots/04-42-ca01-scope-ring0-ring1.png)
+
+From Ireland, Alice is asked for MFA and gets in:
+
+![MFA prompt](docs/demos/03-ca01-mfa-prompt.gif)
+
+Through a United States VPN, the same user is blocked:
+
+![Blocked from the United States](docs/demos/04-ca04-vpn-blocked.gif)
+
+The sign-in log shows why: CA04 blocked it.
+
+![CA04 in the sign-in log](docs/screenshots/04-44-alice-blocked-ca04-log.png)
+
+Two days later, CHG-002 extended the policies to all users. [CHG-002](docs/changes/CHG-002-enforce-conditional-access-all-users.md)
+
+![CA01 for all users](docs/screenshots/04-45-ca01-scope-all-users.png)
+
+### 9. Watching the accounts that bypass everything
+
+Sign-in logs flow to Log Analytics, where a KQL query feeds a critical alert on any break-glass sign-in. [Monitoring write-up](docs/breakglass-monitoring.md)
+
+![Diagnostic setting](docs/screenshots/04-51-diagnostic-setting-signins.png)
+
+A break-glass drill, and the alert email that followed:
+
+![Break-glass sign-in](docs/demos/05a-breakglass-signin.gif)
+
+![Alert email](docs/demos/05b-breakglass-alert-email.gif)
 
 ## Test results
 
