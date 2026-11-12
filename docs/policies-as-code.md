@@ -42,7 +42,7 @@ Readable names also make every pull request easy to review: a diff shows `group:
 | Has a grant control | A policy that requires nothing does nothing |
 | A location block must exclude at least one location | A block on all locations with no exclusion locks out everyone |
 
-The same pipeline also runs PSScriptAnalyzer on every script and the 20 data tests for the synthetic users and dynamic groups. Current result: **58 passed, 0 failed, 7 skipped** (skips are rules that only apply to policies that are On or block by location, and each says why).
+The same pipeline also runs PSScriptAnalyzer on every script and the 20 data tests for the synthetic users and dynamic groups. Result when the policies were first exported in report-only: **58 passed, 0 failed, 7 skipped** (skips are rules that only apply to policies that are On or block by location, and each says why). After enforcement, the approval tests run for every policy: **62 passed, 0 failed, 3 skipped** ([pester-after-enforcement.txt](evidence/pester-after-enforcement.txt)).
 
 ## Proof: the guardrail stops a bad change
 
