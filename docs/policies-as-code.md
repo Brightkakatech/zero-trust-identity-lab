@@ -75,4 +75,8 @@ The fix passes:
 
 - **CI catches what passes locally.** The first pipeline run failed on a PSScriptAnalyzer rule (a function name read as plural) that never ran on my PC. The fix was a rename, and the history shows run 1 red and run 2 green.
 - **Read the export, do not just trust the tests.** The first export contained an `@odata.context` line with the policy ID, and my first test only checked the user and location sections, so it would have passed. The export now strips all `@odata` properties, and a new test checks the whole file.
-- **A report is not a block.** GitHub reported the failing check, but the Merge button stayed clickable. In production, a branch ruleset on `main` would require the check to pass before merging, so the guardrail cannot be ignored.
+- **A report is not a block.** GitHub reported the failing check, but the Merge button stayed clickable. I added a branch ruleset on `main`: every change needs a pull request, the `test` check must pass, and the bypass list is empty, so not even the repository admin can skip it. This change to the documentation was the first one to go through it.
+
+**The ruleset on `main`**
+
+![Branch ruleset on main](screenshots/04-46-branch-ruleset-main.jpg)
