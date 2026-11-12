@@ -4,22 +4,15 @@
 
 How I moved a Microsoft 365 lab tenant from Security Defaults to enforced Conditional Access, run the way I'd run it at work: tested before enforcing, rolled out in stages, kept as code, and monitored. The first part explains the problem, what I did and what I learned. The second part is a full guide to build it yourself.
 
+**Built with:** Microsoft Entra ID (Conditional Access, PIM, Access Reviews, dynamic groups), Microsoft 365, PowerShell 7, Microsoft Graph, Pester, GitHub Actions, Azure Monitor, Log Analytics, KQL.
+
+**Scope:** a lab tenant with trial licences, 4 real test accounts and 150 synthetic staff. I played every role (requester, approver, admin, user), so the process is real but the scale is simulated.
+
 ## The problem
 
 Most Microsoft 365 compromises start with an identity: a phished password, an admin account that is always on, a leaver who still has access. Security Defaults is a good start for a small company, but it is all or nothing, can't be tuned, and when it blocks someone it doesn't say why.
 
-In a bigger organisation the hard part isn't creating Conditional Access policies. It's changing how thousands of people sign in without locking anyone out, and being able to show afterwards what was enforced, on whom and when. That's what I wanted to practise here, the same way it would be run at work:
-
-| In this lab | The real world problem |
-|---|---|
-| Break-glass accounts, excluded and monitored | A bad policy or an MFA outage can't lock everyone out, and the bypass accounts can't be used without someone knowing |
-| Report-only and an impact report | You know who a change affects before it affects them |
-| Rollout rings and change records | IT first, then pilot users, then everyone, each step approved and reversible |
-| PIM | A stolen helpdesk password doesn't come with standing admin rights |
-| Access reviews | People who moved or left lose access they no longer need |
-| Dynamic groups and scripts | Membership follows HR attributes instead of manual edits |
-| Policies as code with CI | A risky change is caught before it goes live |
-| Log Analytics alert | Someone finds out within minutes, not at the next audit |
+In a bigger organisation the hard part isn't creating Conditional Access policies. It's changing how thousands of people sign in without locking anyone out, and being able to show afterwards what was enforced, on whom and when. That's what I wanted to practise here.
 
 These are also the controls auditors and cyber insurers usually ask about: MFA for everyone, restricted admin access, and regular access reviews.
 
@@ -34,6 +27,7 @@ These are also the controls auditors and cyber insurers usually ask about: MFA f
 | **150 synthetic staff** and 11 **dynamic groups**, created by script and tested first | [Stage 6](#stage-6-scale-synthetic-staff-and-rollout-rings) |
 | Policies as code, with **CI blocking** a change that removes the break-glass exclusion | [Stage 7](#stage-7-policies-as-code-with-ci-guardrails) |
 | **Critical alert email** on any break-glass sign-in | [Stage 9](#stage-9-alert-on-every-break-glass-sign-in) |
+| 6 of 7 planned tests passed (the 7th needs Intune), plus 62 automated tests in CI | [Test results](#test-results) |
 
 ## See it working
 
@@ -102,17 +96,13 @@ flowchart LR
 
 ## What broke and what I learned
 
-- **Security Defaults gives no detail when it blocks a sign-in** (error 530035, "blocked by security defaults"), and cannot be tuned. Conditional Access shows every decision per policy. That lack of visibility is one reason to move away from Security Defaults.
-- **Device code sign-in was blocked** by Security Defaults. Device code flow is a common phishing technique, so a normal interactive sign-in was used instead.
-- **Admin policies follow the active role, not the person.** CA03 only applied to HelpDesk once his PIM role was active.
-- **A recorded decision is not an enforced decision.** The access review showed HelpDesk as denied, but auto-apply stalled for six days and he kept access. Checking the group itself found it.
-- **Dynamic rules match everyone with the attribute.** Three groups had one more member than the data predicted, because existing test users had the same department.
-- **CI catches what passes locally, and reading the output catches what tests miss.** The first pipeline run failed a style rule, and the first policy export leaked an ID inside Graph metadata. Both now have tests.
-- **A failing check does not block a merge without a branch rule.** In production, a ruleset on main would require the guardrail tests to pass.
-- **Block always wins.** On a blocked sign-in, Entra ID stops before asking for MFA, so CA01 also shows Failure.
-- **The alert fired and still no email was sent,** because the recipient address was unverified. Test the notification path end to end, not just the detection.
-- **Passkeys in Authenticator keep break-glass accounts signed in on the phone,** creating background sign-ins that needed a narrow, documented alert exclusion. Hardware FIDO2 keys avoid both this and a browser limitation found earlier.
-- **Subscriptions cannot move freely between tenants.** The lab tenant blocked the transfer in until the Global Administrator temporarily elevated.
+- **The access review said "denied", but the user kept access for six days.** Auto-apply stalled. I only found it by checking the group itself, not the review status. Since then I verify outcomes, not statuses.
+- **The alert fired four times and nobody got an email.** The recipient address had never been verified, and Azure skipped it silently. Detection that nobody hears about isn't monitoring.
+- **My first policy export leaked an ID that my tests didn't check for.** I found it by reading the file, fixed the export and added a test, so it can't happen again.
+- **Security Defaults blocked a new user with no explanation** (error 530035). It's the clearest argument for Conditional Access: every decision is visible, per policy, per sign-in.
+- **The emergency accounts kept "signing in" from my phone.** Passkeys in Authenticator keep a session alive. I excluded only that exact pattern and noted the real fix: hardware security keys.
+
+More findings in each stage's write-up under [docs/](docs).
 
 # Build it yourself
 
